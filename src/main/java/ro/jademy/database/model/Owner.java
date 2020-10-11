@@ -2,7 +2,8 @@ package ro.jademy.database.model;
 
 public class Owner {
     private String firstName;
-    private String LastName;
+    private String lastName;
+    private String nationality;
     private Address Address;
 
     public String getFirstName(){
@@ -10,7 +11,7 @@ public class Owner {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setFirstName(String firstName) {
