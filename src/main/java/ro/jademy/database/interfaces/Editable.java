@@ -10,7 +10,7 @@ public interface Editable {
 
     void add(String firstName, String lastName, List<PhoneNumber> phoneNumberList, Date birthday);
 
-    void remove();
+    void removeContact(Contact contact);
 
     void edit();
 }

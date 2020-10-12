@@ -1,15 +1,11 @@
 package ro.jademy.database.model;
 
-import ro.jademy.database.data.Database;
-import ro.jademy.database.interfaces.Editable;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
-public class Contact implements Editable {
+public class Contact {
     private String firstName;
     private String lastName;
     //A contact might have more than 1 phone number.
@@ -20,6 +16,47 @@ public class Contact implements Editable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumberList = phoneNumberList;
+        this.birthday = birthday;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public List<PhoneNumber> getPhoneNumberList() {
+        return phoneNumberList;
+    }
+
+    public void setPhoneNumberList(List<PhoneNumber> phoneNumberList) {
+        this.phoneNumberList = phoneNumberList;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+
+    // The reason for changing the function's name also.
+        // An overloaded method may or may not have different return types.
+        // But return type alone is not sufficient for the compiler to determine which method is to be executed at run time.
+    public String getBirthdayString() {
+        return birthday.toString();
+    }
+
+
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -47,45 +84,28 @@ public class Contact implements Editable {
     }
 
     @Override
-    public void add(String firstName, String lastName, List<PhoneNumber> phoneNumberList,Date birthday) {
-        Contact contact = new Contact(firstName,lastName,phoneNumberList,birthday);
-        String contactsQuery = "INSERT INTO contacts(firstName,lastName,birthday) VALUES (?,?,?)";
-        String phoneNumberQuery = "INSERT INTO phonenumbers(phoneNumber) VALUES (?)";
-        try{
-            PreparedStatement contactsPreparedStatement = Database.getConnection().prepareStatement(contactsQuery);
-            PreparedStatement phoneNumberPreparedStatement = Database.getConnection().prepareStatement(contactsQuery);
-            // Prepare the contacts & phoneNumber statement
-            contactsPreparedStatement.setString(1,contact.firstName);
-            contactsPreparedStatement.setString(2,contact.lastName);
-            contactsPreparedStatement.setDate(3, java.sql.Date.valueOf(String.valueOf(birthday)));
-
-            // forEach phoneNumber inside the list, add them one by one
-            phoneNumberList.forEach(phoneNumber -> {
-                try {
-                    phoneNumberPreparedStatement.setString(1, phoneNumber.getPhoneNumber());
-                    phoneNumberPreparedStatement.execute();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-            // Execute the contacts statement
-            contactsPreparedStatement.execute();
-
-            // Close the DB connection
-            Database.getConnection().close();
-        }catch(SQLException e){
-            // PreparedStatement exception. How do I want to deal with it?
-        }
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return firstName.equals(contact.firstName) &&
+                lastName.equals(contact.lastName) &&
+                phoneNumberList.equals(contact.phoneNumberList) &&
+                birthday.equals(contact.birthday);
     }
 
     @Override
-    public void remove() {
-
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, phoneNumberList, birthday);
     }
 
     @Override
-    public void edit() {
-
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumberList=" + phoneNumberList +
+                ", birthday=" + birthday +
+                '}';
     }
 }
