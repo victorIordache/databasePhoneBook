@@ -74,6 +74,7 @@ public class DBContactsDAO implements contactsDAO{
     public Contact findById(int itemId) {
         return null;
     }
+
     public Contact findByEmail(String Email){
         return null;
     }
