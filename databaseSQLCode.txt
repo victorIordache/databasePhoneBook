@@ -1,0 +1,16 @@
+CREATE SCHEMA jademydatabase;
+USE jademydatabase;
+CREATE TABLE contacts(
+	contactID INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    birthday DATE NOT NULL,
+    email VARCHAR(255)
+);
+CREATE TABLE phonenumbers(
+	id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    phonenumber VARCHAR(255) NOT NULL,
+    contactID INT(11) NOT NULL,
+    countrCode VARCHAR(255),
+    FOREIGN KEY(contactID) REFERENCES contacts(contactID)
+);
