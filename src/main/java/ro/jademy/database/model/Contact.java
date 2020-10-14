@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Contact {
     private int contactID;
@@ -26,11 +28,6 @@ public class Contact {
         this.birthday = birthday;
         this.email = email;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
     public Contact(String firstName, String lastName, List<PhoneNumber> phoneNumberList, Date birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +41,16 @@ public class Contact {
         this.birthday = birthday;
         this.email = email;
     }
+    public int getContactID(){return contactID;}
 
+    public String getEmail() {
+        return email;
+    }
+    public boolean validateEmail(){
+        Pattern emailPattern = Pattern.compile("^((?!\\.)[\\w-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$");
+        Matcher matcher = emailPattern.matcher(email);
+        return matcher.matches();
+    }
 
     public void setContactID(){
         contactsDAO contactsDAO = new DBContactsDAO();
@@ -75,37 +81,27 @@ public class Contact {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+
 
     public List<PhoneNumber> getPhoneNumberList() {
         return phoneNumberList;
     }
 
-    public void setPhoneNumberList(List<PhoneNumber> phoneNumberList) {
-        this.phoneNumberList = phoneNumberList;
-    }
-
     public Date getBirthday() {
         return birthday;
     }
-
 
     // The reason for changing the function's name also.
         // An overloaded method may or may not have different return types.
@@ -114,10 +110,6 @@ public class Contact {
         return birthday.toString();
     }
 
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 
     public void call(){
         System.out.println("You're about to call " + firstName + " " + lastName);

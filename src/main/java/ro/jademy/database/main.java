@@ -23,8 +23,11 @@ public class main {
         phonebook.add("Victor","Iordache", Arrays.asList(new PhoneNumber("+40","753358215"),new PhoneNumber("+40","552152215")) , Date.valueOf("2016-06-15"),"victoras998@gmail.com");
         phonebook.add("George","Iordache", Arrays.asList(new PhoneNumber("+40","753358215"),new PhoneNumber("+40","552152215")) , Date.valueOf("2016-06-15"));
         //phonebook.getContactList().remove(0);
-        phonebook.removeContact(phonebook.getContactList().get(0));
+        //phonebook.getContactList().get(0).call();
         //phonebook.removeContact(phonebook.getContactList().get(0));
+        phonebook.removeContact(2);
+        phonebook.add("Alex","Iordache", Arrays.asList(new PhoneNumber("+40","753358215"),new PhoneNumber("+40","552152215")) , Date.valueOf("2016-06-15"));
+
         List<Contact> contacts = contactsDAO.findAll();
         System.out.println(contacts.toString());
 

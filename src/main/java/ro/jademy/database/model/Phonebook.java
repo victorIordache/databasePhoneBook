@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Phonebook extends DBContactsDAO {
+public class Phonebook {
     private List<Contact> contactList = new ArrayList<Contact>();
     private contactsDAO contactsDAO = new DBContactsDAO();
 
@@ -42,6 +42,14 @@ public class Phonebook extends DBContactsDAO {
 
         // remove contact from database
         contactsDAO.remove(contact);
+    }
+
+    public void removeContact(int contactID){
+         // Filter through contactList to find the right contact
+         // Cast the result from the stream to a contact then remove it from the list
+         contactList.remove(contactList.stream().findFirst().filter(contact -> contact.getContactID() == contactID));
+         // Removing the contact from the database
+         contactsDAO.remove(contactID);
     }
 
     public void edit() {

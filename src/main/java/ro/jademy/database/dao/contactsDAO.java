@@ -16,5 +16,5 @@ public interface contactsDAO extends entityDAO<Contact> {
 
     void remove(Contact contact);
 
-    void remove(int itemId);
+    void remove(int contactID);
 }

@@ -133,7 +133,15 @@ public class DBContactsDAO implements contactsDAO{
     }
 
     @Override
-    public void remove(int itemId) {
-
+    public void remove(int contactID) {
+        String removeByID = "DELETE FROM contacts WHERE contactID = '"+ contactID +"'";
+        try{
+            PreparedStatement removeByIDStatement = DBContactsDAO.getConnection().prepareStatement(removeByID);
+            removeByIDStatement.execute();
+            System.out.println("Succesfully removed contact with ID: " + contactID);
+            DBContactsDAO.closeConnection(DBContactsDAO.getConnection());
+        }catch(SQLException e){
+            System.out.println("removing error by ID");
+        }
     }
 }
